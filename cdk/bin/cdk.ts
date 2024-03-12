@@ -1,21 +1,34 @@
 #!/usr/bin/env node
-import 'source-map-support/register';
-import * as cdk from 'aws-cdk-lib';
-import { CdkStack } from '../lib/cdk-stack';
+import { App, Environment, Stack, StackProps } from 'aws-cdk-lib';
+import { FrontendStack } from '../lib/frontend-stack';
+import { CognitoStack } from '../lib/cognito-stack';
+import { BackendStack } from '../lib/backend-stack';
+require("dotenv").config({ path: '.env' });
 
-const app = new cdk.App();
-new CdkStack(app, 'CdkStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
+const app = new App();
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+class LashStack extends Stack {
+  constructor(parent: App, name: string, props: StackProps) {
+    super(parent, name, props);
 
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
+    new FrontendStack(this, 'FrontendStack', {
+      env: props.env as Environment,
+    });
 
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+    const cognito = new CognitoStack(this, "CognitoStack", {
+      env: props.env as Environment,
+    });
+
+    new BackendStack(this, "BackendStack", {
+      env: props.env as Environment,
+      userPool: cognito.userPool,
+    });
+  }
+}
+
+new LashStack(app, 'LashSite', {
+  env: {
+    region: process.env.REGION,
+    account: process.env.AWS_ACCOUNT,
+  },
 });

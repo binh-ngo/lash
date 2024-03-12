@@ -1,0 +1,103 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    getAllAppointments(clientName: String!): [Appointment]
+    getAllAppointmentsFromAllClients: [Appointment]
+    getAllAppointmentsWithEstimates: [Appointment]
+    getAllAppointmentsWithEstimatesAndContractors: [Appointment]
+    getAllAppointmentsWithoutEstimates: [Appointment]
+    getAppointmentById(appointmentId: String!): Appointment
+    getPublishedAppointments(clientName: String!): [Appointment] @aws_cognito_user_pools
+    getUnpublishedAppointments(clientName: String!): [Appointment] @aws_cognito_user_pools
+    getAllPublishedAppointmentsFromAllClients: [Appointment] @aws_cognito_user_pools
+    getAllUnpublishedAppointmentsFromAllClients: [Appointment] @aws_cognito_user_pools
+
+    getAllClients: [Client]
+    getClientById(clientName: String!, clientId: String!): Client
+
+    getAllMessages(appointmentId: String!): [Message] @aws_cognito_user_pools
+    getMessageById(appointmentId: String!, messageId: String!): Message @aws_cognito_user_pools
+}
+
+type Mutation {
+    createAppointment(appointmentInput: AppointmentInput): Appointment @aws_cognito_user_pools @aws_api_key
+    deleteAppointment(appointmentId: String!): String @aws_cognito_user_pools
+    updateAppointment(
+        appointmentId: String!
+        appointmentInput: AppointmentInput!
+    ): Appointment @aws_cognito_user_pools
+    publishAppointment(appointmentId: String!, isPublished: Boolean!): Appointment @aws_cognito_user_pools
+
+    deleteClient(clientName: String!, clientId: String!): String @aws_cognito_user_pools
+    updateClient(
+        clientName: String!
+        clientId: String!
+        clientInput: ClientInput!
+    ): Client @aws_cognito_user_pools
+
+    createMessage(messageInput: MessageInput): Message @aws_cognito_user_pools
+    deleteMessage(authorName: String!, messageId: String!): String @aws_cognito_user_pools
+    updateMessage(
+        appointmentId: String!
+        messageId: String!
+        messageInput: MessageInput!
+    ): Message @aws_cognito_user_pools
+}
+
+input AppointmentInput {
+    clientName: String
+    clientPhone: String
+    email: String
+    appointmentType: String
+    technicianName: String
+    publishDate: String
+    isPublished: Boolean
+}
+
+input ClientInput {
+    clientName: String
+    clientPhone: String
+    email: String
+}
+
+input MessageInput {
+    authorId: String
+    authorName: String
+    appointmentId: String
+    body: String
+}
+
+type Appointment @aws_api_key @aws_cognito_user_pools {
+    clientName: String
+    clientId: String
+    clientPhone: String
+    email: String
+    appointmentId: String
+    appointmentType: String
+    technicianName: String
+    technicianId: String
+    publishDate: String
+    createdAt: String
+    updatedAt: String
+    isPublished: Boolean
+}
+
+type Client @aws_api_key @aws_cognito_user_pools {
+    clientId: String
+    clientName: String
+    clientPhone: String
+    email: String
+    createdAt: String
+    updatedAt: String
+}
+
+type Message @aws_cognito_user_pools {
+    messageId: String
+    body: String
+    authorId: String
+    authorName: String
+    createdAt: String
+}
