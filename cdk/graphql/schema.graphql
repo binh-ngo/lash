@@ -10,10 +10,10 @@ type Query {
     getAllAppointmentsWithEstimatesAndContractors: [Appointment]
     getAllAppointmentsWithoutEstimates: [Appointment]
     getAppointmentById(appointmentId: String!): Appointment
-    getPublishedAppointments(clientName: String!): [Appointment] @aws_cognito_user_pools
-    getUnpublishedAppointments(clientName: String!): [Appointment] @aws_cognito_user_pools
-    getAllPublishedAppointmentsFromAllClients: [Appointment] @aws_cognito_user_pools
-    getAllUnpublishedAppointmentsFromAllClients: [Appointment] @aws_cognito_user_pools
+    getConfirmedAppointments(clientName: String!): [Appointment] @aws_cognito_user_pools
+    getUnconfirmedAppointments(clientName: String!): [Appointment] @aws_cognito_user_pools
+    getAllConfirmedAppointmentsFromAllClients: [Appointment] @aws_cognito_user_pools
+    getAllUnconfirmedAppointmentsFromAllClients: [Appointment] @aws_cognito_user_pools
 
     getAllClients: [Client]
     getClientById(clientName: String!, clientId: String!): Client
@@ -29,7 +29,7 @@ type Mutation {
         appointmentId: String!
         appointmentInput: AppointmentInput!
     ): Appointment @aws_cognito_user_pools
-    publishAppointment(appointmentId: String!, isPublished: Boolean!): Appointment @aws_cognito_user_pools
+    confirmAppointment(appointmentId: String!, isConfirmed: Boolean!): Appointment @aws_cognito_user_pools
 
     deleteClient(clientName: String!, clientId: String!): String @aws_cognito_user_pools
     updateClient(
@@ -53,8 +53,8 @@ input AppointmentInput {
     email: String
     appointmentType: String
     technicianName: String
-    publishDate: String
-    isPublished: Boolean
+    confirmDate: String
+    isConfirmed: Boolean
 }
 
 input ClientInput {
@@ -79,10 +79,10 @@ type Appointment @aws_api_key @aws_cognito_user_pools {
     appointmentType: String
     technicianName: String
     technicianId: String
-    publishDate: String
+    confirmDate: String
     createdAt: String
     updatedAt: String
-    isPublished: Boolean
+    isConfirmed: Boolean
 }
 
 type Client @aws_api_key @aws_cognito_user_pools {
