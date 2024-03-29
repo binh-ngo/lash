@@ -9,8 +9,8 @@ export const Navbar: React.FC = () => {
           <div className="flex items-baseline space-x-4">
             <ul className='flex flex-row justify-between w-6/12 text-2xl font-extrabold'>
               <li className='font-comfortaa mx-4 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out'><a href='/home'>Home</a></li>
-              <li className='font-comfortaa mx-4 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out'><a href='/recipes'>Services</a></li>
-              <li className='font-comfortaa mx-4 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out'><a href='/contact'>Staff</a></li>
+              <li className='font-comfortaa mx-4 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out'><a href='/staff'>Staff</a></li>
+              <li className='font-comfortaa mx-4 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out'><a href='/book'>Book</a></li>
             </ul>
           </div>
         </div>
