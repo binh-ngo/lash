@@ -2,7 +2,7 @@ const eyelash = require('../assets/eyelash.webm');
 
 export const HomeHero = () => {
   return (
-    <div className="group relative flex flex-col lg:items-center">
+    <div className="-z-10 group relative flex flex-col lg:items-center">
       <video className="shadow transition-all duration-700 ease-in-out max-h-[700px] lg:max-h-[700] lg:w-auto" autoPlay loop muted>
         <source src={eyelash} type="video/mp4" />
         Your browser does not support the video tag.
