@@ -1,14 +1,14 @@
 const AWS = require("aws-sdk");
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-const deleteMessage = async (messageId: string, projectId: string) => {
+const deleteMessage = async (messageId: string, appointmentId: string) => {
   console.log(
-    `deleteMessage invocation event: ${JSON.stringify(`Project ID: ${projectId}, Message Id: ${messageId}`, null, 2)}`
+    `deleteMessage invocation event: ${JSON.stringify(`Appointment ID: ${appointmentId}, Message Id: ${messageId}`, null, 2)}`
   );
 
   const batchWriteParams = {
     RequestItems: {
-      "ContractorSiteContractorBackendStackC9C337A3-ContractorSiteTableEFCEEB4B-DSY0RC8FT3VB": [
+      "LashSiteBackendStack448F6DFB-LashSiteTable7E458D9E-1C2NWPVUALTPK": [
         // {
         //   DeleteRequest: {
         //     Key: {
@@ -25,14 +25,14 @@ const deleteMessage = async (messageId: string, projectId: string) => {
             },
           },
         },
-        {
-          DeleteRequest: {
-            Key: {
-              PK: `PROJECT#${projectId}`,
-              SK: `MESSAGE#${messageId}`,
-            },
-          },
-        },
+        // {
+        //   DeleteRequest: {
+        //     Key: {
+        //       PK: `APPOINTMENT#${appointmentId}`,
+        //       SK: `MESSAGE#${messageId}`,
+        //     },
+        //   },
+        // },
       ],
     },
   };

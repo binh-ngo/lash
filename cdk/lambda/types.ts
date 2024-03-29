@@ -25,7 +25,7 @@ export type Client = {
 export type ClientInput = {
     clientName: string;
     email: string;
-    phone: string;
+    clientPhone: string;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~  //
@@ -66,12 +66,15 @@ export type Message = {
   body: string;
   authorId: string;
   authorName: string;
+  appointmentId: string;
   createdAt: string;
 }
 
 export type MessageInput = {
   authorId: string;
   authorName: string;
+  recipientId: string;
+  recipientName: string;
   appointmentId: string;
   body: string;
 }
@@ -110,10 +113,8 @@ export type MessageAppsyncEvent = {
       arguments: {
         messageId?: string;
         threadId?: string;
-        projectId?: string;
+        appointmentId?: string;
         authorName?: string;
-        authorName1?: string;
-        authorName2?: string;
         messageInput?: MessageInput;
       };
 }

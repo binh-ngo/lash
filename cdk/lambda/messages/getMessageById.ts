@@ -10,7 +10,7 @@ const getMessageById = async (messageId: string) => {
   }
 
   const params = {
-    TableName: process.env.CONTRACTORS_TABLE,
+    TableName: process.env.LASH_TABLE,
     Key: {
       PK: `MESSAGE#${messageId}`,
       SK: `MESSAGE#${messageId}`,

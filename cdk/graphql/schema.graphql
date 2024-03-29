@@ -6,12 +6,7 @@ schema {
 type Query {
     getAllAppointments(clientName: String!): [Appointment]
     getAllAppointmentsFromAllClients: [Appointment]
-    getAllAppointmentsWithEstimates: [Appointment]
-    getAllAppointmentsWithEstimatesAndContractors: [Appointment]
-    getAllAppointmentsWithoutEstimates: [Appointment]
     getAppointmentById(appointmentId: String!): Appointment
-    getConfirmedAppointments(clientName: String!): [Appointment] @aws_cognito_user_pools
-    getUnconfirmedAppointments(clientName: String!): [Appointment] @aws_cognito_user_pools
     getAllConfirmedAppointmentsFromAllClients: [Appointment] @aws_cognito_user_pools
     getAllUnconfirmedAppointmentsFromAllClients: [Appointment] @aws_cognito_user_pools
 
@@ -24,13 +19,14 @@ type Query {
 
 type Mutation {
     createAppointment(appointmentInput: AppointmentInput): Appointment @aws_cognito_user_pools @aws_api_key
-    deleteAppointment(appointmentId: String!): String @aws_cognito_user_pools
+    deleteAppointment(clientName: String!, appointmentId: String!): String @aws_cognito_user_pools
     updateAppointment(
         appointmentId: String!
         appointmentInput: AppointmentInput!
     ): Appointment @aws_cognito_user_pools
     confirmAppointment(appointmentId: String!, isConfirmed: Boolean!): Appointment @aws_cognito_user_pools
 
+    createClient(clientInput: ClientInput): Client @aws_cognito_user_pools
     deleteClient(clientName: String!, clientId: String!): String @aws_cognito_user_pools
     updateClient(
         clientName: String!
@@ -53,8 +49,6 @@ input AppointmentInput {
     email: String
     appointmentType: String
     technicianName: String
-    confirmDate: String
-    isConfirmed: Boolean
 }
 
 input ClientInput {

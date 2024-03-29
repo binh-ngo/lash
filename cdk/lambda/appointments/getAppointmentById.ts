@@ -10,7 +10,7 @@ const getAppointmentById = async (appointmentId: string) => {
   }
 
   const params = {
-    TableName: process.env.CONTRACTORS_TABLE,
+    TableName: process.env.LASH_TABLE,
     Key: {
       PK: `APPOINTMENT#${appointmentId}`,
       SK: `APPOINTMENT#${appointmentId}`,

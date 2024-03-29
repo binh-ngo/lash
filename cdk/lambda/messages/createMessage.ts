@@ -1,7 +1,7 @@
 const AWS = require("aws-sdk");
 const docClient = new AWS.DynamoDB.DocumentClient();
 import { ulid } from "ulid";
-import { Bid, BidInput, Message, MessageInput, Thread } from "../types";
+import { Message, MessageInput } from "../types";
 require("dotenv").config({ path: ".env" });
 const {SNSClient, PublishCommand} = require('@aws-sdk/client-sns');
 
@@ -13,27 +13,17 @@ const createMessage = async (messageInput: MessageInput) => {
 
         const message: Message = {
             messageId,
-            projectId: messageInput.projectId,
-            threadId,
             body: messageInput.body,
             authorName: messageInput.authorName,
             authorId: messageInput.authorId,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-        };
-        
-        const thread: Thread = {
-            threadId,
-            projectId: messageInput.projectId,
-            numMessages: 0,
+            appointmentId: messageInput.appointmentId,
             createdAt: new Date().toISOString(),
         };
-
 
         // Store Chef data in DynamoDB
         const messageParams = {
             RequestItems: {
-                "ContractorSiteContractorBackendStackC9C337A3-ContractorSiteTableEFCEEB4B-DSY0RC8FT3VB": [
+                "LashSiteBackendStack448F6DFB-LashSiteTable7E458D9E-1C2NWPVUALTPK": [
                     {
                         // allows you to query for a single message
                         // May be unnecessary
@@ -50,41 +40,10 @@ const createMessage = async (messageInput: MessageInput) => {
                         // allows you to query for all messages in a project
                         PutRequest: {
                             Item: {
-                                PK: `PROJECT#${messageInput.projectId}`,
+                                PK: `APPOINTMENT#${messageInput.appointmentId}`,
                                 SK: `MESSAGE#${messageId}`,
                                 type: 'message',
                                 ...message,
-                            },
-                        },
-                    },
-                ],
-            },
-            ReturnConsumedCapacity: "TOTAL",
-        };
-
-        const threadParams = {
-            RequestItems: {
-                "ContractorSiteContractorBackendStackC9C337A3-ContractorSiteTableEFCEEB4B-DSY0RC8FT3VB": [
-                    {
-                        // allows you to query for a single message
-                        // May be unnecessary
-                        PutRequest: {
-                            Item: {
-                                PK: `THREAD#${threadId}`,
-                                SK: `MESSAGE#${messageId}`,
-                                type: 'message',
-                                ...message,
-                            },
-                        },
-                    },
-                    {
-                        // allows you to query for all messages in a project
-                        PutRequest: {
-                            Item: {
-                                PK: `PROJECT#${messageInput.projectId}`,
-                                SK: `THREAD#${threadId}`,
-                                type: 'thread',
-                                ...thread,
                             },
                         },
                     },
@@ -94,10 +53,10 @@ const createMessage = async (messageInput: MessageInput) => {
         };
 
         const snsParams = {
-            Subject: `New message on Project-${message.projectId}`,
-            Message: `You received a message from ${message.authorName}! Log in and check it out: https://schedule.builders/projects/${message.projectId}
+            Subject: `New message on Appointment-${message.appointmentId}`,
+            Message: `You received a message from ${message.authorName}! Log in and check it out: https://schedule.builders/projects/${message.appointmentId}
             `, 
-            TopicArn: process.env.DEFAULT_TOPIC_ARN + `ProjectBidNotifications-${message.projectId}`
+            TopicArn: process.env.DEFAULT_TOPIC_ARN + `ProjectBidNotifications-${message.appointmentId}`
           };
 
         try {

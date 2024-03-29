@@ -42,7 +42,7 @@ const updateAppointment = async (
 
     const params = {
         RequestItems: {
-            "ContractorSiteContractorBackendStackC9C337A3-ContractorSiteTableEFCEEB4B-DSY0RC8FT3VB":
+            "LashSiteBackendStack448F6DFB-LashSiteTable7E458D9E-1C2NWPVUALTPK":
                 [
                     {
                         PutRequest: {

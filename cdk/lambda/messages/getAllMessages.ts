@@ -3,18 +3,18 @@ const AWS = require("aws-sdk");
 require('dotenv').config()
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-const getAllMessages = async (projectId: string) => {
+const getAllMessages = async (appointmentId: string) => {
   console.log(`getAllMessages called`);
 
   const params: ddbQueryPostsParams = {
-    TableName: process.env.CONTRACTORS_TABLE || "",
+    TableName: process.env.LASH_TABLE || "",
     KeyConditionExpression: "#PK = :post_partition and begins_with(#SK, :sk_prefix)",
     ExpressionAttributeNames: {
       "#PK": "PK",
       "#SK": "SK",
     },
     ExpressionAttributeValues: {
-      ":post_partition": `PROJECT#${projectId}`,
+      ":post_partition": `APPOINTMENT#${appointmentId}`,
       ":sk_prefix": "MESSAGE#",
     },
     ReturnConsumedCapacity: "TOTAL",

@@ -2,7 +2,13 @@
 module.exports = {
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "allura": ["Allura", "cursive"],
+        "comfortaa": ["Comfortaa", "sans-serif"],
+        "archivo": ["Archivo Black", "sans-serif"],
+      },
+    },
     screens: {
       '3xs': '300px',
       '2xs': '400px',

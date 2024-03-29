@@ -1,3 +1,21 @@
+import confirmAppointment from "./appointments/confirmAppointment";
+import createAppointment from "./appointments/createAppointment";
+import deleteAppointment from "./appointments/deleteAppointment";
+import getAllAppointments from "./appointments/getAllAppointments";
+import getAllAppointmentsFromAllClients from "./appointments/getAllAppointmentsFromAllClients";
+import getAppointmentById from "./appointments/getAppointmentById";
+import getAllConfirmedAppointmentsFromAllClients from "./appointments/getConfirmedAppointments";
+import getAllUnconfirmedAppointmentsFromAllClients from "./appointments/getUnconfirmedAppointments";
+import updateAppointment from "./appointments/updateAppointment";
+import deleteClient from "./clients/deleteClient";
+import getAllClients from "./clients/getAllClients";
+import getClientById from "./clients/getClientById";
+import updateClient from "./clients/updateClient";
+import createMessage from "./messages/createMessage";
+import deleteMessage from "./messages/deleteMessage";
+import getAllMessages from "./messages/getAllMessages";
+import getMessageById from "./messages/getMessageById";
+import updateMessage from "./messages/updateMessage";
 import { AppointmentAppsyncEvent, ClientAppsyncEvent, MessageAppsyncEvent } from "./types";
 
 export async function handler(event: any): Promise<any> {
@@ -22,16 +40,12 @@ function getEventType(event: any): "Client" | "Appointment" | "Message"{
   switch (event.info.fieldName) {
     case "getAllAppointments":
     case "getAllAppointmentsFromAllClients":
-    case "getAllAppointmentsWithEstimates":
-    case "getAllAppointmentsWithEstimatesAndContractors":
-    case "getAllAppointmentsWithoutEstimates":
-    case "getPublishedAppointments":
-    case "getUnpublishedAppointments":
     case "getAllPublishedAppointmentsFromAllUsers":
     case "getAllUnpublishedAppointmentsFromAllUsers":
     case "getAppointmentById":
     case "publishAppointment":
     case "createAppointment":
+    case "confirmAppointment":
     case "deleteAppointment":
     case "updateAppointment":
       return "Appointment";
@@ -41,7 +55,6 @@ function getEventType(event: any): "Client" | "Appointment" | "Message"{
     case "updateClient":
       return "Client";
     case "getAllMessages":
-    case "getMessagesInThread":
     case "getMessageById":
     case "createMessage":
     case "updateMessage":
@@ -81,22 +94,12 @@ function handleAppointmentEvent(event: AppointmentAppsyncEvent) {
       return getAllAppointments(event.arguments.clientName!);
     case "getAllAppointmentsFromAllClients":
       return getAllAppointmentsFromAllClients();
-    case "getAllAppointmentsWithEstimates":
-      return getAllAppointmentsWithEstimates();
-    case "getAllAppointmentsWithEstimatesAndContractors":
-      return getAllAppointmentsWithEstimatesAndContractors();
-    case "getAllAppointmentsWithoutEstimates":
-      return getAllAppointmentsWithoutEstimates();
-    case "getPublishedAppointments":
-      return getPublishedAppointments(event.arguments.clientName!);
-    case "getUnpublishedAppointments":
-      return getUnpublishedAppointments(event.arguments.clientName!);
-    case "getAllPublishedAppointmentsFromAllClients":
-      return getAllPublishedAppointmentsFromAllClients();
-    case "getAllUnpublishedAppointmentsFromAllClients":
-      return getAllUnpublishedAppointmentsFromAllClients();
-    case "publishAppointment":
-      return publishAppointment(event.arguments.appointmentId!, event.arguments.isPublished!);
+    case "getAllConfirmedAppointmentsFromAllClients":
+      return getAllConfirmedAppointmentsFromAllClients();
+    case "getAllUnconfirmedAppointmentsFromAllClients":
+      return getAllUnconfirmedAppointmentsFromAllClients();
+    case "confirmAppointment":
+      return confirmAppointment(event.arguments.appointmentId!, event.arguments.isConfirmed!);
     case "createAppointment":
       return createAppointment(event.arguments.appointmentInput!);
     case "updateAppointment":
@@ -118,8 +121,6 @@ function handleMessageEvent(event: MessageAppsyncEvent) {
       return getMessageById(event.arguments.messageId!);
     case "getAllMessages":
       return getAllMessages(event.arguments.appointmentId!);
-    case "getMessagesInThread":
-      return getMessagesInThread(event.arguments.appointmentId!, event.arguments.authorName1!, event.arguments.authorName2!);
     case "createMessage":
       return createMessage(event.arguments.messageInput!);
     case "updateMessage":

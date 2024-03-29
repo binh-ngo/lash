@@ -51,7 +51,7 @@ import { Effect, PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws
         memorySize: 512,
         environment: {
           // Lash Table
-          lash_TABLE: lashSiteTable.tableName,
+          LASH_TABLE: lashSiteTable.tableName,
         },
       });
       lashSiteTable.grantFullAccess(lashSiteLambda);
@@ -124,23 +124,79 @@ import { Effect, PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws
       // Resolvers
       lashSiteDataSource.createResolver({
         typeName: "Query",
-        fieldName: "getAllProjects",
+        fieldName: "getAllAppointments",
       })
       lashSiteDataSource.createResolver({
         typeName: "Query",
-        fieldName: "getProjectById",
+        fieldName: "getAllAppointmentsFromAllClients",
+      })
+      lashSiteDataSource.createResolver({
+        typeName: "Query",
+        fieldName: "getAllConfirmedAppointmentsFromAllClients",
+      })
+      lashSiteDataSource.createResolver({
+        typeName: "Query",
+        fieldName: "getAllUnconfirmedAppointmentsFromAllClients",
+      })
+      lashSiteDataSource.createResolver({
+        typeName: "Query",
+        fieldName: "getAppointmentById",
       })
       lashSiteDataSource.createResolver({
         typeName: "Mutation",
-        fieldName: "createProject",
+        fieldName: "confirmAppointment",
       })
       lashSiteDataSource.createResolver({
         typeName: "Mutation",
-        fieldName: "deleteProject",
+        fieldName: "createAppointment",
       })
       lashSiteDataSource.createResolver({
         typeName: "Mutation",
-        fieldName: "updateProject",
+        fieldName: "deleteAppointment",
+      })
+      lashSiteDataSource.createResolver({
+        typeName: "Mutation",
+        fieldName: "updateAppointment",
+      })
+
+      // Client Resolvers
+      lashSiteDataSource.createResolver({
+        typeName: "Query",
+        fieldName: "getAllClients",
+      })
+      lashSiteDataSource.createResolver({
+        typeName: "Query",
+        fieldName: "getClientById",
+      })
+      lashSiteDataSource.createResolver({
+        typeName: "Mutation",
+        fieldName: "deleteClient",
+      })
+      lashSiteDataSource.createResolver({
+        typeName: "Mutation",
+        fieldName: "updateClient",
+      })
+
+      // Message Resolvers
+      lashSiteDataSource.createResolver({
+        typeName: "Query",
+        fieldName: "getAllMessages",
+      })
+      lashSiteDataSource.createResolver({
+        typeName: "Query",
+        fieldName: "getMessageById",
+      })
+      lashSiteDataSource.createResolver({
+        typeName: "Mutation",
+        fieldName: "createMessage",
+      })
+      lashSiteDataSource.createResolver({
+        typeName: "Mutation",
+        fieldName: "updateMessage",
+      })
+      lashSiteDataSource.createResolver({
+        typeName: "Mutation",
+        fieldName: "deleteMessage",
       })
     }
   }

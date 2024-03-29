@@ -3,21 +3,19 @@ import { ddbQueryPostsParams } from "../types";
 const AWS = require("aws-sdk");
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-const getConfirmedAppointments = async (clientName: string) => {
-  console.log(`getConfirmedAppointments called`);
+const getAllConfirmedAppointmentsFromAllClients = async () => {
+  console.log(`getAllConfirmedAppointmentsFromAllClients called`);
 
   const params: ddbQueryPostsParams = {
-    TableName: process.env.CONTRACTORS_TABLE || "",
-    KeyConditionExpression: "#PK = :post_partition AND begins_with(#SK, :sk_prefix)", 
+    TableName: process.env.LASH_TABLE || "",
+    KeyConditionExpression: "#PK = :post_partition", 
     FilterExpression: "#isConfirmed = :isConfirmed",
     ExpressionAttributeNames: {
       "#PK": "PK",
-      "#SK": "SK",
       "#isConfirmed": "isConfirmed",
     },
     ExpressionAttributeValues: {
-      ":post_partition": `CLIENT#${clientName}`,
-      ":sk_prefix": "APPOINTMENT#",
+      ":post_partition": `APPOINTMENTS`,
       ":isConfirmed": true,
     },
     ReturnConsumedCapacity: "TOTAL",
@@ -37,4 +35,4 @@ const getConfirmedAppointments = async (clientName: string) => {
   }
 };
 
-export default getConfirmedAppointments;
+export default getAllConfirmedAppointmentsFromAllClients;

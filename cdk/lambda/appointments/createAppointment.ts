@@ -12,7 +12,7 @@ const createAppointment = async (appointmentInput: AppointmentInput) => {
     const appointmentId = ulid();
     const clientId = ulid();
 
-    const formattedName = appointmentInput.clientName ? appointmentInput.clientName.trim().replace(/\s+/g, "") : "";
+    const formattedName = appointmentInput.clientName ? appointmentInput.clientName.toLowerCase().trim().replace(/\s+/g, "") : "";
 
     // function extractUsernameFromEmail(email: string) {
     //     const emailParts = email.split('@');
@@ -55,7 +55,7 @@ const createAppointment = async (appointmentInput: AppointmentInput) => {
     // Store Appointment and Client data in DynamoDB
     const params = {
         RequestItems: {
-            "ContractorSiteContractorBackendStackC9C337A3-ContractorSiteTableEFCEEB4B-DSY0RC8FT3VB": [
+            "LashSiteBackendStack448F6DFB-LashSiteTable7E458D9E-1C2NWPVUALTPK": [
                 {
                     PutRequest: {
                         Item: {

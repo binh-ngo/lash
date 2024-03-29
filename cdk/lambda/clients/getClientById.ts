@@ -10,7 +10,7 @@ const getClientById = async (clientName: string, clientId: string) => {
   }
 
   const params = {
-    TableName: process.env.CONTRACTORS_TABLE,
+    TableName: process.env.LASH_TABLE,
     Key: {
       PK: `CLIENT#${clientName}`,
       SK: `CLIENT#${clientId}`,

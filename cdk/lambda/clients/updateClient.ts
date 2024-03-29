@@ -22,12 +22,8 @@ const updateClient = async (
         const client: Client = {
             clientId,
             clientName: clientInput.clientName,
-            clientPhone: clientInput.phone,
-            clientUsername: clientInput.clientUsername,
-            address: clientInput.address,
-            city: clientInput.city,
+            clientPhone: clientInput.clientPhone,
             email: clientInput.email,
-            // imageUrl: clientInput.imageUrl,
             createdAt: retrievedClient.createdAt,
             updatedAt: new Date().toISOString(),
         };
@@ -38,7 +34,7 @@ const updateClient = async (
         console.log(`TYPEOF CONTRACTORINPUT --------- ${typeof (clientInput)}`);
     
         const params = {
-        TableName: process.env.CONTRACTORS_TABLE,
+        TableName: process.env.LASH_TABLE,
         Key: {
             PK: `CLIENT#${clientName}`,
             SK: `CLIENT#${clientId}`,
@@ -48,9 +44,7 @@ const updateClient = async (
         ExpressionAttributeNames: {
             "#clientName": "clientName",
             "#clientPhone": "clientPhone",
-            "#address": "address",
             "#email": "email",
-            "#city": "city",
             "#updatedAt": "updatedAt",
             "#createdAt": "createdAt",
             "#clientId": "clientId",
@@ -58,9 +52,7 @@ const updateClient = async (
         ExpressionAttributeValues: {
             ":clientName": client.clientName,
             ":clientPhone": client.clientPhone,
-            ":address": client.address,
             ":email": client.email,
-            ":city": client.city,
             ":updatedAt": client.updatedAt,
             ":createdAt": client.createdAt,
             ":clientId": client.clientId,
@@ -72,20 +64,18 @@ const updateClient = async (
     console.log(`params: ${JSON.stringify(params, null, 2)}`);
 
     const additionalParams = {
-        TableName: process.env.CONTRACTORS_TABLE,
+        TableName: process.env.LASH_TABLE,
         Key: {
             PK: `CLIENTS`,
             SK: `CLIENT#${clientName}`,
         },
         UpdateExpression:
-            "set #clientName = :clientName, #clientPhone = :clientPhone,  #address = :address,  #email = :email,  #city = :city, #updatedAt = :updatedAt, #createdAt = :createdAt, #clientId = :clientId",
+            "set #clientName = :clientName, #clientPhone = :clientPhone,  #email = :email, #updatedAt = :updatedAt, #createdAt = :createdAt, #clientId = :clientId",
             ExpressionAttributeNames: {
             "#clientId": "clientId",
             "#clientName": "clientName",
             "#clientPhone": "clientPhone",
-            "#address": "address",
             "#email": "email",
-            "#city": "city",
             "#updatedAt": "updatedAt",
             "#createdAt": "createdAt",
         },
@@ -93,9 +83,7 @@ const updateClient = async (
             ":clientId": client.clientId,
             ":clientName": client.clientName,
             ":clientPhone": client.clientPhone,
-            ":address": client.address,
             ":email": client.email,
-            ":city": client.city,
             ":updatedAt": client.updatedAt,
             ":createdAt": client.createdAt,
         },

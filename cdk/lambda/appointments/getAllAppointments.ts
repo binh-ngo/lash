@@ -8,7 +8,7 @@ const getAllAppointments = async (clientName: string) => {
   console.log(`getAllAppointments called`);
 
   const params: ddbQueryPostsParams = {
-    TableName: process.env.CONTRACTORS_TABLE || "",
+    TableName: process.env.LASH_TABLE || "",
     KeyConditionExpression: "#PK = :post_partition AND begins_with(#SK, :sk_prefix)", 
     ExpressionAttributeNames: {
       "#PK": "PK",

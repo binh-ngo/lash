@@ -7,7 +7,7 @@ const getAllUnpublishedAppointmensFromAllClients = async () => {
   console.log(`getAllUnpublishedAppointmensFromAllClients called`);
 
   const params: ddbQueryPostsParams = {
-    TableName: process.env.CONTRACTORS_TABLE || "",
+    TableName: process.env.LASH_TABLE || "",
     KeyConditionExpression: "#PK = :post_partition", 
     FilterExpression: "#isPublished = :isPublished",
     ExpressionAttributeNames: {
