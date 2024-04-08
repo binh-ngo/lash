@@ -2,28 +2,16 @@ const AWS = require("aws-sdk");
 const docClient = new AWS.DynamoDB.DocumentClient();
 import { ulid } from "ulid";
 import { Client, Appointment, AppointmentInput } from "../types";
-
+const { SNSClient, PublishCommand } = require('@aws-sdk/client-sns');
+const sns = new AWS.SNS();
+const snsClient = new SNSClient({ region: 'us-east-1' });
 require("dotenv").config({ path: ".env" });
 
-
-// TODO: as of right now, clients don't need to sign in, so they have to fill out the 
-// form every time they want to do another appointment
 const createAppointment = async (appointmentInput: AppointmentInput) => {
     const appointmentId = ulid();
     const clientId = ulid();
 
     const formattedName = appointmentInput.clientName ? appointmentInput.clientName.toLowerCase().trim().replace(/\s+/g, "") : "";
-
-    // function extractUsernameFromEmail(email: string) {
-    //     const emailParts = email.split('@');
-    //     if (emailParts.length !== 2) {
-    //         console.error('Invalid email format');
-    //         return null;
-    //     }
-    
-    //     const username = emailParts[0];
-    //     return username;
-    // }
 
     const client: Client = {
         clientId,
@@ -34,9 +22,6 @@ const createAppointment = async (appointmentInput: AppointmentInput) => {
         updatedAt: new Date().toISOString(),
     };
 
-    // Patios 10-20 / sqft
-    // https://www.bankrate.com/homeownership/how-much-does-it-cost-to-build-a-deck/#how-much-it-costs
-
     const appointment: Appointment = {
         clientId,
         clientName: formattedName,
@@ -44,10 +29,11 @@ const createAppointment = async (appointmentInput: AppointmentInput) => {
         email: appointmentInput.email,
         appointmentId,
         appointmentType: appointmentInput.appointmentType,
-        technicianName: appointmentInput.technicianName,
-        technicianId: appointmentInput.technicianId,
+        firstAppointment: appointmentInput.firstAppointment,
+        secondAppointment: appointmentInput.secondAppointment,
         isConfirmed: false,
-        publishDate: '',
+        date: appointmentInput.date,
+        confirmedDate: '',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
     };
@@ -110,11 +96,39 @@ const createAppointment = async (appointmentInput: AppointmentInput) => {
         },
         ReturnConsumedCapacity: "TOTAL",
     };
-    
+
+    const notificationParams = {
+        Subject: "New Booking Received!",
+        Message: `
+        Name: ${appointment.clientName}
+        Phone: ${appointment.clientPhone}
+        Email: ${appointment.email}
+        Date: ${appointment.date}
+        Appointment Type: ${appointment.appointmentType}
+        First Choice Appointment: ${appointment.firstAppointment}
+        Second Choice Appointment: ${appointment.secondAppointment}
+
+        Please confirm this appointment within 24 hours. 
+        `,
+        TopicArn: process.env.TOPIC_ARN
+    };
+
     try {
+        
         const newAppointment = await docClient.batchWrite(params).promise();
         console.log(`Created appointment: ${JSON.stringify(appointment, null, 2)}`);
         console.log(`Created client: ${JSON.stringify(client, null, 2)}`);
+
+        if(newAppointment) {
+            try {
+                const snsResult = await snsClient.send(new PublishCommand(notificationParams));
+                console.log(`Notification sent: ${JSON.stringify(snsResult, null, 2)}`);
+            }
+            catch(err){
+                console.log(`Error sending notification: ${JSON.stringify(err, null, 2)}`);
+                throw err;
+        }
+    };
         return appointment;
     } catch (err) {
         console.log(`Error: ${JSON.stringify(err, null, 2)}`);

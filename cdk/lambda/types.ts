@@ -37,11 +37,12 @@ export type Appointment = {
     clientId: string;
     clientPhone: string;
     email: string;
+    date: string;
     appointmentId: string;
-    technicianName: string;
-    technicianId: string;
+    firstAppointment: string;
+    secondAppointment: string;
+    confirmedDate: string;
     appointmentType: string;
-    publishDate: string;
     createdAt: string;
     updatedAt: string;
     isConfirmed: boolean;
@@ -50,12 +51,13 @@ export type Appointment = {
 export type AppointmentInput = {
     clientName: string;
     clientPhone: string;
+    date: string;
     email: string;
+    firstAppointment: string;
+    secondAppointment: string;
     appointmentType: string;
-    technicianName: string;
-    technicianId: string;
     isConfirmed: boolean;
-    publishDate: string;
+    confirmedDate: string;
 }
 //~~~~~~~~~~~~~~~~~~~~~~  //
 //  Messages Event Types  //

@@ -1,47 +1,39 @@
-const lash1 = require('../assets/lash1.webp');
-const lash2 = require('../assets/lash2.webp');
-const lash3 = require('../assets/lash3.webp');
-
-export type Service = {
-  title: string;
-  imageSrc: any;
-  description: string;
-};
 
 export const HomeServices = () => {
 
-  const services: Service[] = [
-    {
-      title: 'Extensions',
-      imageSrc: lash1,
-      description: 'Transform your lashes into lush, voluminous works of art with our Luxe Lash Extensions service. Say goodbye to mascara and hello to effortlessly glamorous eyes that last for weeks!',
-    },
-    {
-      title: 'Brow Lamination',
-      imageSrc: lash2,
-      description: 'Achieve flawlessly sculpted brows with our Brow Perfection service. Brow lamination is the ultimate solution for those seeking defined, polished brows that stay in place all day long.',
-    },
-    {
-      title: 'Lash Lifts',
-      imageSrc: lash3,
-      description: "Elevate your natural lashes to new heights with our Lash Lift & Tint service. Say goodbye to the daily hassle of curling your lashes and hello to effortlessly lifted and tinted lashes that enhance your eyes' natural beauty.",
-    }
-  ];
-  
   return (
-    <>
-    <h1 className='text-4xl text-center my-8 font-comfortaa'>Services</h1>
-    <div className="flex flex-wrap justify-center">
-    {services.map((service, index) => (
-      <div key={index} className="w-full 3xs:w-1/2 md:w-1/3 lg:w-1/4 px-4 mb-8 group">
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <h2 className="text-xl font-bold mb-2 group-hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out">{service.title}</h2>
-          <img src={service.imageSrc} alt={service.title} className="mb-2" />
-          <p>{service.description}</p>
+    <div className="flex flex-col w-full">
+      <div className="flex flex-wrap justify-center">
+        <div className="w-full 3xs:w-full md:w-1/2 lg:w-1/3 px-4 mb-24">
+      <h1 className='text-6xl text-center mt-20 my-8 font-allura'>Services</h1>
+            <div className="bg-white rounded-lg shadow-md p-4">
+              <h2 className="text-4xl font-comfortaa mt-6 text-center font-bold mb-2 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out">Classic $120</h2>
+              <div className="font-comfortaa text-lg flex-row flex justify-around mb-10">
+                <p>Full $135</p>
+                <p>Fill $65</p>
+              </div>
+              <h2 className="text-4xl font-comfortaa mt-6 text-center font-bold mb-2 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out">Hybrid $140</h2>
+              <div className="font-comfortaa text-lg flex-row flex justify-around mb-10">
+                <p>Full $155</p>
+                <p>Fill $70+</p>
+              </div>
+              <h2 className="text-4xl font-comfortaa mt-6 text-center font-bold mb-2 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out">3D - 4D Volume $160</h2>
+              <div className="font-comfortaa text-lg flex-row flex justify-around mb-10">
+                <p>Full $175</p>
+                <p>Fill $75+</p>
+              </div>
+              <h2 className="text-4xl font-comfortaa mt-6 text-center font-bold mb-2 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out">5D - 6D Volume $180</h2>
+              <div className="font-comfortaa text-lg flex-row flex justify-around mb-10">
+                <p>Full $195</p>
+                <p>Fill $85+</p>
+              </div>
+              <h2 className="text-4xl font-comfortaa mt-6 text-center font-bold mb-2 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out">7D+ Volume $200</h2>
+              <div className="font-comfortaa text-lg flex-row flex justify-around mb-10">
+                <p>Fill $95+</p>
+              </div>
+          </div>
         </div>
       </div>
-    ))}
-  </div>
-    </>
+    </div>
     )
 }

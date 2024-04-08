@@ -48,7 +48,9 @@ input AppointmentInput {
     clientPhone: String
     email: String
     appointmentType: String
-    technicianName: String
+    date: String
+    firstAppointment: String
+    secondAppointment: String
 }
 
 input ClientInput {
@@ -69,11 +71,12 @@ type Appointment @aws_api_key @aws_cognito_user_pools {
     clientId: String
     clientPhone: String
     email: String
+    date: String
     appointmentId: String
+    firstAppointment: String
+    secondAppointment: String
+    confirmedDate: String
     appointmentType: String
-    technicianName: String
-    technicianId: String
-    confirmDate: String
     createdAt: String
     updatedAt: String
     isConfirmed: Boolean

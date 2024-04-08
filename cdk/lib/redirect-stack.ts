@@ -8,13 +8,13 @@ export class HttpsRedirectStack extends Stack {
     super(scope, id, props);
 
     const hostedZone = HostedZone.fromHostedZoneAttributes(this, 'HostedZoneWithAttributes', {
-      hostedZoneId: 'Z08663992YTL843XORKK7',
-      zoneName: 'schedule.builders'
+      hostedZoneId: 'Z10321711YVDS28R758W4',
+      zoneName: 'modbeautyco.com'
     })
 
     new HttpsRedirect(this, 'RedirectStack', {
-      recordNames: ['schedule.builders'],
-      targetDomain: 'www.schedule.builders',
+      recordNames: ['modbeautyco.com'],
+      targetDomain: 'www.modbeautyco.com',
       zone: hostedZone
     })
   }
