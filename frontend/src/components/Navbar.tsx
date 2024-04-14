@@ -7,7 +7,7 @@ export const Navbar: React.FC = () => {
     <nav>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 z-50">
         <div className="flex items-center justify-center h-12 relative">
-          <h1 className='font-allura text-4xl absolute left-4 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out'>Mod Beauty</h1>
+          <h1 className='font-allura text-4xl absolute left-4 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out'><a href='/'>Mod Beauty</a></h1>
           <div className="flex items-baseline space-x-4 3xs:hidden md:block">
             <ul className='flex flex-row justify-between w-6/12 text-2xl font-extrabold'>
               <li className='font-comfortaa mx-4 hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out'><a href='/'>Home</a></li>

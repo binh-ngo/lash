@@ -46,6 +46,9 @@ export const Book = () => {
     "7D+ Volume Fill $95+"
   ];
 
+    const currentDate = new Date().toISOString().split('T')[0]; 
+
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -97,7 +100,7 @@ export const Book = () => {
     <div>
     {
       !formSubmitted ? (
-        <div className="mx-auto max-w-md mt-[3rem] font-comfortaa">
+        <div className="mx-auto max-w-md mt-[3rem] font-comfortaa 3xs:p-4">
         <h2 className="text-6xl mb-4 text-center font-allura">Book an Appointment</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -114,7 +117,7 @@ export const Book = () => {
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">Date:</label>
-            <input name="date" type="date" value={formData.date} onChange={handleInputChange} className="mt-1 p-2 border border-gray-300 rounded-md w-full" required />
+            <input name="date" type="date" value={formData.date} onChange={handleInputChange} className="mt-1 p-2 border border-gray-300 rounded-md w-full" min={currentDate} required />
           </div>
           <label className="block text-sm font-medium text-gray-700">Appointment Time</label>
           <label className="block text-xs font-medium text-red-400">*We may schedule you around your selected times if there are time conflicts.</label>
@@ -122,7 +125,7 @@ export const Book = () => {
 
           <div className='flex flex-row justify-around'>
             <div className="mb-4 w-5/12">
-              <select name="firstAppointment" value={formData.firstAppointment} onChange={handleSelectChange} className="mt-1 p-2 border border-gray-300 rounded-md w-full" required>
+              <select name="firstAppointment" value={formData.firstAppointment} onChange={handleSelectChange} className="mt-1 p-2 border text-xs border-gray-300 rounded-md w-full" required>
                 <option value="">1st Availability</option>
                 {timeOptions.map((time, index) => (
                   <option key={index} value={time}>{time}</option>
@@ -130,7 +133,7 @@ export const Book = () => {
               </select>
             </div>
             <div className="mb-4 w-5/12">
-              <select name="secondAppointment" value={formData.secondAppointment} onChange={handleSelectChange} className="mt-1 p-2 border border-gray-300 rounded-md w-full">
+              <select name="secondAppointment" value={formData.secondAppointment} onChange={handleSelectChange} className="mt-1 p-2 border text-xs border-gray-300 rounded-md w-full">
                 <option value="">2nd Availability</option>
                 {timeOptions.map((time, index) => (
                   <option key={index} value={time}>{time}</option>
@@ -141,7 +144,7 @@ export const Book = () => {
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">Appointment Type:</label>
             <select name="appointmentType" value={formData.appointmentType} onChange={handleSelectChange} className="mt-1 p-2 border border-gray-300 rounded-md w-full" required>
-              <option value="">Appointment Types</option>
+              <option value="">Choose Appointment Type</option>
               {appointmentTypeOptions.map((appointmentType, index) => (
                 <option key={index} value={appointmentType}>{appointmentType}</option>
               ))}

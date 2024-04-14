@@ -3,7 +3,7 @@ const eyelash = require('../assets/lash_hero.mp4');
 export const HomeHero = () => {
   return (
     <div className="-z-10 group relative flex flex-col lg:items-center">
-      <video className="opacity-80 shadow transition-all duration-700 ease-in-out" autoPlay loop muted>
+      <video className="opacity-80 shadow transition-all duration-700 ease-in-out" playsInline autoPlay loop muted>
         <source src={eyelash} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
