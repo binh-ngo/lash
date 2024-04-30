@@ -11,8 +11,7 @@ export const Footer: React.FC = () => {
           <div>
             <div className="flex items-baseline space-x-4">
               <ul className='flex flex-row justify-between w-full text-xl font-extrabold'>
-                <li className='mx-4 font-comfortaa group'><a href='https://www.binhngo.me/'>Powered by </a><a className="group-hover:text-pink-400 transition-all duration-300 ease-in-out" href='https://www.binhngo.me/'>Binh</a></li>
-                <li className='font-comfortaa'> © {year}</li>
+                <li className='font-comfortaa'> Mod Beauty Co. © {year}</li>
               </ul>
             </div>
           </div>

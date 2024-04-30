@@ -1,4 +1,5 @@
 import { CiLocationOn, CiPhone, CiClock1, CiMail } from "react-icons/ci";
+import { FaInstagram } from "react-icons/fa";
 
 const isOpen = () => {
   const currentDay = new Date().getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
@@ -31,6 +32,8 @@ const ContactInfo = () => {
   const nextOpeningTime = getNextOpeningTime();
 
   return (
+    <div>
+
     <div className=" mx-auto p-8 bg-white rounded-lg shadow-lg mb-12 md:w-1/2 lg:w-1/3 3xs:w-full mt-[3rem]">
       <h2 className="3xs:text-4xl lg:text-6xl mb-4 text-center font-allura">Contact Information</h2>
       <div className="mb-4 flex flex-row">
@@ -71,6 +74,10 @@ const ContactInfo = () => {
         </div>
       </div>
     </div>
+    <div className="3xs:text-5xl lg:text-5xl flex justify-center">
+      <a className="hover:text-pink-400 hover:scale-110 transition-all duration-300 ease-in-out" href="https://www.instagram.com/modbeauty.co/"><FaInstagram /></a>
+    </div>
+  </div>
   );
 };
 
